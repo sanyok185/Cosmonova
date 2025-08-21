@@ -434,6 +434,9 @@ textarea.input {
   transform: translate(0);
 }
 .benefit {
+  transition: all 0.5s ease-in-out;
+  opacity: 0;
+  transform: translate(0, 0.625rem);
   display: flex;
   flex-direction: column;
   min-height: 22.875rem;
@@ -443,6 +446,10 @@ textarea.input {
   /* .benefit__name */
   /* .benefit__text */
   /* .benefits__navigation */
+}
+.benefit.--watcher-view {
+  opacity: 1;
+  transform: translate(0);
 }
 .benefit__icon {
   transition: all 0.4s;
