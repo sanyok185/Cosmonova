@@ -4416,7 +4416,7 @@ function initSliders() {
     }
   }
   if (document.querySelector(".equipment__slider")) {
-    collabSlider = new Swiper(".equipment__slider", {
+    new Swiper(".equipment__slider", {
       modules: [Navigation],
       observer: true,
       observeParents: true,
