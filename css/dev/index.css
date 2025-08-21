@@ -1169,6 +1169,9 @@ textarea.input {
   .checkbox__text {
     font-size: 1.125rem;
   }
+  .hero__container {
+    padding-top: 13rem;
+  }
   .hero__title {
     font-size: 2rem;
   }
