@@ -4826,42 +4826,30 @@ function pageNavigation() {
   }
 }
 document.querySelector("[data-fls-scrollto]") ? window.addEventListener("load", pageNavigation) : null;
-const isTouch = document.documentElement.hasAttribute("data-fls-touch");
-const cards = document.querySelectorAll(".card");
-function closeAllCards(exceptCard) {
-  cards.forEach((c) => {
-    if (c !== exceptCard) c.classList.remove("flipped");
-  });
-}
-if (!isTouch) {
-  cards.forEach((card) => {
-    let hoverTimeout;
-    card.addEventListener("mouseenter", () => {
-      clearTimeout(hoverTimeout);
-      closeAllCards(card);
-      card.classList.add("flipped");
-    });
-    card.addEventListener("mouseleave", () => {
-      clearTimeout(hoverTimeout);
-      hoverTimeout = setTimeout(() => {
-        card.classList.remove("flipped");
-      }, 80);
-    });
-  });
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".card")) closeAllCards();
-  });
-} else {
-  cards.forEach((card) => {
-    card.addEventListener("click", (e) => {
-      if (e.target.closest("a,button,input,textarea,select,label,[data-no-flip],.no-flip")) return;
-      e.stopPropagation();
+const isMobile = {
+  Android: function() {
+    return navigator.userAgent.match(/Android/i);
+  },
+  BlackBerry: function() {
+    return navigator.userAgent.match(/BlackBerry/i);
+  },
+  iOS: function() {
+    return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+  },
+  Opera: function() {
+    return navigator.userAgent.match(/Opera Mini/i);
+  },
+  Windows: function() {
+    return navigator.userAgent.match(/IEMobile/i);
+  },
+  any: function() {
+    return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
+  }
+};
+if (isMobile.any()) {
+  document.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("click", () => {
       card.classList.toggle("flipped");
     });
   });
-  document.addEventListener("click", () => {
-    const activeCard = document.querySelector(".card.flipped");
-    if (activeCard) activeCard.classList.remove("flipped");
-  });
 }
-я;
