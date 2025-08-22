@@ -4826,43 +4826,73 @@ function pageNavigation() {
   }
 }
 document.querySelector("[data-fls-scrollto]") ? window.addEventListener("load", pageNavigation) : null;
-const cards = document.querySelectorAll(".card");
-function closeAllCards(exceptCard) {
-  cards.forEach((c) => {
-    if (c !== exceptCard) {
-      c.classList.remove("flipped");
+(() => {
+  const CFG = {
+    selector: ".card",
+    swipeTolerance: 10,
+    // px: рух більше — вважаємо свайп і не фліпимо
+    hoverCloseDelay: 80
+  };
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const isTouchCapable = window.matchMedia("(hover: none) and (pointer: coarse)").matches || "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  const cards = Array.from(document.querySelectorAll(CFG.selector));
+  const initialized = /* @__PURE__ */ new WeakSet();
+  function closeAll(except) {
+    cards.forEach((c) => {
+      if (c !== except) c.classList.remove("flipped");
+    });
+  }
+  function open(card) {
+    closeAll(card);
+    card.classList.add("flipped");
+  }
+  function toggle(card) {
+    card.classList.contains("flipped") ? card.classList.remove("flipped") : open(card);
+  }
+  cards.forEach((card) => {
+    if (initialized.has(card)) return;
+    initialized.add(card);
+    let startX = 0, startY = 0, moved = false, hoverTimeout;
+    const onPointerDown = (e) => {
+      if (e.pointerType === "mouse") return;
+      startX = e.clientX;
+      startY = e.clientY;
+      moved = false;
+    };
+    const onPointerMove = (e) => {
+      if (e.pointerType === "mouse") return;
+      if (Math.abs(e.clientX - startX) > CFG.swipeTolerance || Math.abs(e.clientY - startY) > CFG.swipeTolerance) moved = true;
+    };
+    const onPointerUp = (e) => {
+      if (e.pointerType === "mouse") return;
+      if (moved) return;
+      if (e.target.closest("a,button,input,textarea,select,label,[data-no-flip],.no-flip")) return;
+      e.stopPropagation();
+      toggle(card);
+    };
+    card.addEventListener("pointerdown", onPointerDown, { passive: true });
+    card.addEventListener("pointermove", onPointerMove, { passive: true });
+    card.addEventListener("pointerup", onPointerUp, { passive: true });
+    if (canHover) {
+      card.addEventListener("mouseenter", () => {
+        clearTimeout(hoverTimeout);
+        open(card);
+      });
+      card.addEventListener("mouseleave", () => {
+        clearTimeout(hoverTimeout);
+        hoverTimeout = setTimeout(() => card.classList.remove("flipped"), CFG.hoverCloseDelay);
+      });
     }
   });
-}
-const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-cards.forEach((card) => {
-  if (isTouch) {
-    card.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (card.classList.contains("flipped")) {
-        card.classList.remove("flipped");
-      } else {
-        closeAllCards(card);
-        card.classList.add("flipped");
-      }
-    });
-  } else {
-    let hoverTimeout;
-    card.addEventListener("mouseenter", () => {
-      clearTimeout(hoverTimeout);
-      closeAllCards(card);
-      card.classList.add("flipped");
-    });
-    card.addEventListener("mouseleave", () => {
-      clearTimeout(hoverTimeout);
-      hoverTimeout = setTimeout(() => {
-        card.classList.remove("flipped");
-      }, 50);
-    });
+  {
+    document.addEventListener("pointerup", (e) => {
+      if (!e.target.closest(CFG.selector)) closeAll();
+    }, { passive: true });
   }
-});
-document.addEventListener("click", (e) => {
-  if (!e.target.closest(".card")) {
-    closeAllCards();
-  }
-});
+  if (isTouchCapable) document.body.classList.add("is-touch");
+  window.FlipCards = {
+    closeAll: () => closeAll(),
+    open: (el) => open(el),
+    toggle: (el) => toggle(el)
+  };
+})();
