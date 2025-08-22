@@ -142,10 +142,10 @@ body {
   min-width: 0;
 }
 [class*=__container] {
-  max-width: 81.25rem;
+  max-width: 81.875rem;
   margin: 0 auto;
-  padding-left: 0.9375rem;
-  padding-right: 0.9375rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 .title {
   color: #191931;
@@ -333,7 +333,7 @@ textarea.input {
   align-items: center;
 }
 .hero__caption {
-  top: 6.9375rem;
+  top: 0.6875rem;
   font-size: 2.25rem;
   left: 0;
   width: 100%;
@@ -969,7 +969,7 @@ textarea.input {
   color: rgba(25, 25, 49, 0.5);
   line-height: 167%;
 }
-@media (max-width: 81.25em){
+@media (max-width: 81.875em){
   .why__content {
     padding-right: 2.5rem;
   }
@@ -1030,7 +1030,7 @@ textarea.input {
     margin-bottom: 5.9375rem;
   }
 }
-@media (max-width: 60em) and (min-width: 81.25em){
+@media (max-width: 60em) and (min-width: 81.875em){
   .hero__caption {
     padding-top: 4.5rem;
   }
@@ -1046,12 +1046,12 @@ textarea.input {
     font-size: 1.25rem;
   }
   .hero__content {
-    margin-bottom: 5.375rem;
+    margin-bottom: 3.75rem;
   }
 }
 @media (max-width: 60em) and (max-width: 20em){
   .hero__caption {
-    padding-top: 2rem;
+    padding-top: 1.5625rem;
   }
 }
 @media (max-width: 60em){
@@ -1171,10 +1171,10 @@ textarea.input {
     font-size: 1.125rem;
   }
   .hero__container {
-    padding-top: 13rem;
+    padding-top: 10.3125rem;
   }
   .hero__title {
-    font-size: 2rem;
+    font-size: 1.875rem;
   }
   .hero__title {
     margin-bottom: 1.25rem;
@@ -1349,12 +1349,12 @@ textarea.input {
     font-size: clamp( 1.25rem , 0.7808022922625rem  +  1.9102196753vw , 2.5rem );
   }
   .hero__content {
-    margin-bottom: clamp( 5.375rem , 5.16386103151875rem  +  0.8595988539vw , 5.9375rem );
+    margin-bottom: clamp( 3.75rem , 2.9289040114625rem  +  3.3428844317vw , 5.9375rem );
   }
 }
-@media (max-width: 60em) and (min-width: 20em) and (max-width: 81.25em){
+@media (max-width: 60em) and (min-width: 20em) and (max-width: 81.875em){
   .hero__caption {
-    padding-top: clamp( 2rem , 1.1836734693875rem  +  4.0816326531vw , 4.5rem );
+    padding-top: clamp( 1.5625rem , 0.61300505050625rem  +  4.7474747475vw , 4.5rem );
   }
 }
 @media (max-width: 61.99875em) and (min-width: 24.5625em) and (max-width: 61.99875em){
@@ -1365,21 +1365,21 @@ textarea.input {
     margin-bottom: clamp( 2.5rem , 1.67985575478125rem  +  3.3390096497vw , 3.75rem );
   }
 }
-@media (min-width: 20em) and (max-width: 81.25em){
+@media (min-width: 20em) and (max-width: 81.875em){
   .input {
-    font-size: clamp( 0.875rem , 0.83418367346875rem  +  0.2040816327vw , 1rem );
+    font-size: clamp( 0.875rem , 0.83459595959375rem  +  0.202020202vw , 1rem );
   }
   .input::placeholder {
-    font-size: clamp( 0.875rem , 0.83418367346875rem  +  0.2040816327vw , 1rem );
+    font-size: clamp( 0.875rem , 0.83459595959375rem  +  0.202020202vw , 1rem );
   }
   .form-hero__items {
-    gap: clamp( 0.75rem , 0.6683673469375rem  +  0.4081632653vw , 1rem );
+    gap: clamp( 0.75rem , 0.66919191919375rem  +  0.404040404vw , 1rem );
   }
   .collab__slide {
-    border-radius: clamp( 0.75rem , 1.0816326530625rem  +  -0.4081632653vw , 1rem );
+    border-radius: clamp( 0.75rem , 1.08080808080625rem  +  -0.404040404vw , 1rem );
   }
   .card__front {
-    border-radius: clamp( 0.75rem , 1.0816326530625rem  +  -0.4081632653vw , 1rem );
+    border-radius: clamp( 0.75rem , 1.08080808080625rem  +  -0.404040404vw , 1rem );
   }
 }
 @media (min-width: 22.5em){
@@ -1543,7 +1543,7 @@ textarea.input {
     font-size: clamp( 1.125rem , 0.79081632653125rem  +  1.3605442177vw , 1.5rem );
   }
   .hero__title {
-    font-size: clamp( 2rem , 0.88605442176875rem  +  4.5351473923vw , 3.25rem );
+    font-size: clamp( 1.875rem , 0.64965986394375rem  +  4.9886621315vw , 3.25rem );
   }
   .why__subtitle {
     font-size: clamp( 1.5rem , 1.05442176870625rem  +  1.8140589569vw , 2rem );
@@ -1709,7 +1709,7 @@ textarea.input {
     transition: transform 0.5s ease-in-out 0.4s, opacity 0.5s ease-in-out 0.4s, background-color 0.4s, color 0.4s;
   }
 }
-@media (min-width: 81.25em){
+@media (min-width: 81.875em){
   .input {
     font-size: 1rem;
   }
