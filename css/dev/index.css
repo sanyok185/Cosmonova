@@ -543,6 +543,8 @@ textarea.input {
 }
 .collab__navigation .swiper-button-prev,
 .collab__navigation .swiper-button-next {
+  aspect-ratio: 1/1;
+  flex-shrink: 0;
   background-color: #fff !important;
   color: #121F3F !important;
 }
@@ -1155,6 +1157,9 @@ textarea.input {
 @media (max-width: 29.99875em){
   .form-hero {
     width: 100%;
+  }
+  .card__title {
+    font-size: 1.75rem;
   }
   .why__button {
     width: 100%;
