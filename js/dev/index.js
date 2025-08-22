@@ -4397,6 +4397,9 @@ function initSliders() {
   if (window.innerWidth <= 650) {
     if (document.querySelector(".collab__slider")) {
       collabSlider = new Swiper(".collab__slider", {
+        simulateTouch: true,
+        preventClicks: false,
+        preventClicksPropagation: false,
         modules: [Navigation],
         observer: true,
         observeParents: true,
@@ -4559,17 +4562,17 @@ class DynamicAdapt {
     this.mediaQueries = this.objects.map(({ breakpoint }) => `(${this.type}-width: ${breakpoint / 16}em),${breakpoint}`).filter((item, index, self) => self.indexOf(item) === index);
     this.mediaQueries.forEach((media) => {
       const mediaSplit = media.split(",");
-      const matchMedia = window.matchMedia(mediaSplit[0]);
+      const matchMedia2 = window.matchMedia(mediaSplit[0]);
       const mediaBreakpoint = mediaSplit[1];
       const objectsFilter = this.objects.filter(({ breakpoint }) => breakpoint === mediaBreakpoint);
-      matchMedia.addEventListener("change", () => {
-        this.mediaHandler(matchMedia, objectsFilter);
+      matchMedia2.addEventListener("change", () => {
+        this.mediaHandler(matchMedia2, objectsFilter);
       });
-      this.mediaHandler(matchMedia, objectsFilter);
+      this.mediaHandler(matchMedia2, objectsFilter);
     });
   }
-  mediaHandler(matchMedia, objects) {
-    if (matchMedia.matches) {
+  mediaHandler(matchMedia2, objects) {
+    if (matchMedia2.matches) {
       objects.forEach((object) => {
         if (object.destination) {
           this.moveTo(object.place, object.element, object.destination);
@@ -4826,30 +4829,20 @@ function pageNavigation() {
   }
 }
 document.querySelector("[data-fls-scrollto]") ? window.addEventListener("load", pageNavigation) : null;
-const isMobile = {
-  Android: function() {
-    return navigator.userAgent.match(/Android/i);
-  },
-  BlackBerry: function() {
-    return navigator.userAgent.match(/BlackBerry/i);
-  },
-  iOS: function() {
-    return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-  },
-  Opera: function() {
-    return navigator.userAgent.match(/Opera Mini/i);
-  },
-  Windows: function() {
-    return navigator.userAgent.match(/IEMobile/i);
-  },
-  any: function() {
-    return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
-  }
-};
-if (isMobile.any()) {
-  document.querySelectorAll(".card").forEach((card) => {
-    card.addEventListener("click", () => {
+const isTouch = matchMedia("(pointer: coarse)").matches;
+document.querySelectorAll(".card").forEach((card) => {
+  if (isTouch) {
+    card.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.querySelectorAll(".card.flipped").forEach((activeCard) => {
+        if (activeCard !== card) {
+          activeCard.classList.remove("flipped");
+        }
+      });
       card.classList.toggle("flipped");
     });
-  });
-}
+  } else {
+    card.addEventListener("mouseenter", () => card.classList.add("flipped"));
+    card.addEventListener("mouseleave", () => card.classList.remove("flipped"));
+  }
+});
