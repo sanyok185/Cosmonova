@@ -4827,7 +4827,6 @@ function pageNavigation() {
 }
 document.querySelector("[data-fls-scrollto]") ? window.addEventListener("load", pageNavigation) : null;
 const cards = document.querySelectorAll(".card");
-const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 function closeAllCards(exceptCard) {
   cards.forEach((c) => {
     if (c !== exceptCard) {
@@ -4835,8 +4834,19 @@ function closeAllCards(exceptCard) {
     }
   });
 }
-if (!isTouch) {
-  cards.forEach((card) => {
+const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+cards.forEach((card) => {
+  if (isTouch) {
+    card.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (card.classList.contains("flipped")) {
+        card.classList.remove("flipped");
+      } else {
+        closeAllCards(card);
+        card.classList.add("flipped");
+      }
+    });
+  } else {
     let hoverTimeout;
     card.addEventListener("mouseenter", () => {
       clearTimeout(hoverTimeout);
@@ -4849,22 +4859,10 @@ if (!isTouch) {
         card.classList.remove("flipped");
       }, 50);
     });
-  });
-} else {
-  cards.forEach((card) => {
-    card.addEventListener("click", (e) => {
-      const isAlreadyFlipped = card.classList.contains("flipped");
-      if (isAlreadyFlipped) {
-        card.classList.remove("flipped");
-      } else {
-        closeAllCards(card);
-        card.classList.add("flipped");
-      }
-    });
-  });
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".card")) {
-      closeAllCards();
-    }
-  });
-}
+  }
+});
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".card")) {
+    closeAllCards();
+  }
+});

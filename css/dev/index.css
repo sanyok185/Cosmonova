@@ -557,6 +557,7 @@ textarea.input {
 }
 
 .card {
+  touch-action: manipulation;
   min-height: 25rem;
   aspect-ratio: 440/492;
   /* .card__front */
